@@ -1,8 +1,12 @@
 import express from "express";
+import mongoose from "mongoose";
+import config from 'config';
 
-const PORT = 5000;
 
 const app = express();
+const PORT = config.get('serverPort') || 5000;
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('yep');
