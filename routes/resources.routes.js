@@ -20,7 +20,7 @@ router.get(basePath, async(req, res) => {
         const query = req.query;
         let resources;
 
-        query.hasOwnProperty('category') ?
+        query.hasOwnProperty('categories') ?
             resources = await Resource.find(query) : resources = await Resource.find();
 
         return res.json(resources);
