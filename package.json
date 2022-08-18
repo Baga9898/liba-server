@@ -1,7 +1,7 @@
 {
   "name": "liba-server",
   "version": "1.0.0",
-  "description": "Liba app backand part",
+  "description": "Liba app backend part",
   "main": "index.js",
   "type": "module",
   "scripts": {

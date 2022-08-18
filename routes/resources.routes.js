@@ -1,5 +1,5 @@
-import { Router } from "express";
-import Resource from "../models/Resource";
+import Router from "express";
+import Resource from "../models/Resource.js";
 
 const router = new Router();
 
