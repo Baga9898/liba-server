@@ -40,6 +40,19 @@ router.get(`${basePath}/:id`, async(req, res) => {
     }
 })
 
+router.put(`${basePath}/:id`, async(req, res) => {
+    try {
+        const {id} = req.params;
+        const { name, link, description, createDate, modifiedDates, categories } = req.body;
+        const resource = ({ name, link, description, createDate, modifiedDates, categories });
+        !id && res.status(400).json({message: 'ID don\'t exist'});
+        const updatedResource = await Resource.findByIdAndUpdate(id, resource, {new: true});
+        return res.json(updatedResource);
+    } catch (error) {
+        res.json(error);
+    }
+})
+
 router.delete(`${basePath}/:id`, async(req, res) => {
     try {
         const {id} = req.params;
