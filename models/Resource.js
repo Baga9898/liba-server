@@ -4,9 +4,9 @@ const Resource = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
     link: { type: String, required: true, unique: true },
     description: { type: String },
-    // createDate: { type: Date, required: true, default: Date.now },
-    // modifiedDates: { type: Array },
-    // categories: { type: Array },
+    createDate: { type: Date, required: true, default: Date.now },
+    modifiedDates: { type: Array },
+    categories: { type: Array },
 })
 
 export default mongoose.model('Resource', Resource);
