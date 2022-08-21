@@ -4,6 +4,7 @@ import config from 'config';
 
 import resourcesRouter from './routes/resources.routes.js';
 import usersRouter from './routes/users.routes.js';
+import rolesRouter from './routes/roles.routes.js';
 import authRouter from './routes/auth.routes.js';
 
 const app = express();
@@ -12,6 +13,7 @@ const PORT = config.get('serverPort') || 5000;
 app.use(express.json());
 app.use('/api', resourcesRouter);
 app.use('/api', usersRouter);
+app.use('/api', rolesRouter);
 app.use('/auth', authRouter);
 
 const startServer = async() => {

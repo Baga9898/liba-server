@@ -1,15 +1,15 @@
 import { Router } from "express";
-import User from "../models/User.js";
+import Role from "../models/Role.js";
 
 const router = new Router();
-const basePath = '/users';
+const basePath = '/roles';
 
 router.post(basePath, (req, res) => {
     
 })
 
 router.get(basePath, (req, res) => {
-    res.send('users here')
+    res.send('roles here')
 })
 
 router.get(`${basePath}/:id`, (req, res) => {
