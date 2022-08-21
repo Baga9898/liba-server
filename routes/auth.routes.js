@@ -1,11 +1,21 @@
 import { Router } from "express";
 import { check, validationResult } from "express-validator";
 import bcrypt from 'bcryptjs';
+import config from 'config';
+import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
 import Role from "../models/Role.js";
 
 const router = new Router();
+
+const generateAccessToken = (id, roles) => {
+    const payload = {
+        id,
+        roles,
+    }
+    return jwt.sign(payload, config.get('secret'), { expiresIn: '24h' });
+}
 
 router.post('/registration', [
         check('username', 'Cannot be empty').notEmpty(),
@@ -19,7 +29,7 @@ router.post('/registration', [
         const { username, password } = req.body;
         const candidate = await User.findOne({ username });
         if (candidate) {
-            return res.status(400).json({ message: 'User is exist' })
+            return res.status(400).json({ message: 'User is exist' });
         };
         const hashedPassword = bcrypt.hashSync(password, 7);
         const userRole = await Role.findOne({ name: 'watcher' });
@@ -31,8 +41,22 @@ router.post('/registration', [
     }
 })
 
-router.post('/login', (req, res) => {
-
+router.post('/login', async(req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ message: `User with name ${username} does not exist` });
+        }
+        const validPassword = bcrypt.compareSync(password, user.password);
+        if (!validPassword) {
+            return res.status(400).json({ message: `Uncorrect password` });
+        }
+        const token = generateAccessToken(user._id, user.roles);
+        return res.json(token);
+    } catch (error) {
+        console.error(error);
+    }
 })
 
 export default router;

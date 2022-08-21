@@ -1,4 +1,5 @@
 {
     "serverPort": 5000,
-    "DBUrl": "mongodb+srv://root:root@resources.ucsb5.mongodb.net/?retryWrites=true&w=majority"
+    "DBUrl": "mongodb+srv://root:root@resources.ucsb5.mongodb.net/liba?retryWrites=true&w=majority",
+    "secret": "SWCRET_KEY_HERE"
 }
