@@ -17,8 +17,8 @@ router.post(basePath, async(req, res) => {
 
 router.get(basePath, async(req, res) => {
     try {
-        const resources = await Role.find();
-        return res.json(resources);
+        const role = await Role.find();
+        return res.json(role);
     } catch (error) {
         res.json(error);
     }
