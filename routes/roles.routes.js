@@ -4,24 +4,59 @@ import Role from "../models/Role.js";
 const router = new Router();
 const basePath = '/roles';
 
-router.post(basePath, (req, res) => {
-    
+router.post(basePath, async(req, res) => {
+    try {
+        const { name, description } = req.body;
+        const role = new Role({ name, description });
+        await role.save();
+        return res.json(role);
+    } catch (error) {
+        res.json(error);
+    }
 })
 
-router.get(basePath, (req, res) => {
-    res.send('roles here')
+router.get(basePath, async(req, res) => {
+    try {
+        const resources = await Role.find();
+        return res.json(resources);
+    } catch (error) {
+        res.json(error);
+    }
 })
 
-router.get(`${basePath}/:id`, (req, res) => {
-    
+router.get(`${basePath}/:id`, async(req, res) => {
+    try {
+        const {id} = req.params;
+        !id && res.status(400).json({ message: 'ID don\'t exist' });
+        const role = await Role.findById(id);
+        return res.json(role);
+    } catch (error) {
+        res.json(error);
+    }
 })
 
-router.put(`${basePath}/:id`, (req, res) => {
-    
+router.put(`${basePath}/:id`, async(req, res) => {
+    try {
+        const {id} = req.params;
+        const { name, description } = req.body;
+        const role = ({ name, description });
+        !id && res.status(400).json({message: 'ID don\'t exist'});
+        const updatedRole = await Role.findByIdAndUpdate(id, role, {new: true});
+        return res.json(updatedRole);
+    } catch (error) {
+        res.json(error);
+    }
 })
 
-router.delete(`${basePath}/:id`, (req, res) => {
-    
+router.delete(`${basePath}/:id`, async(req, res) => {
+    try {
+        const {id} = req.params;
+        !id && res.status(400).json({message: 'ID don\'t exist'});
+        const role = await Role.findByIdAndDelete(id);
+        return res.json(role);
+    } catch (error) {
+        res.json(error);
+    }
 })
 
 export default router;
