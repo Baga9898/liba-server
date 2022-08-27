@@ -35,7 +35,7 @@ router.post('/registration', [
         const userRole = await Role.findOne({ name: 'watcher' });
         const user = new User({ username, password: hashedPassword, roles: [userRole.name] });
         user.save();
-        return res.json({ message: 'User has been successfully registered' })
+        return res.json({ user: user.username, message: 'User has been successfully registered' })
     } catch (error) {
         console.error(error);
     }
@@ -53,7 +53,15 @@ router.post('/login', async(req, res) => {
             return res.status(400).json({ message: `Uncorrect password` });
         }
         const token = generateAccessToken(user._id, user.roles);
-        return res.json(token);
+        return res.json({
+            token,
+            user: {
+                id: user.id,
+                username: user.username,
+                roles: user.roles,
+            },
+            message: 'login successful',
+        });
     } catch (error) {
         console.error(error);
     }
