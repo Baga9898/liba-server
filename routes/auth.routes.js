@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { check, validationResult } from "express-validator";
+
+import { authMiddleWare } from '../middleware/auth.middleware.js';
 import bcrypt from 'bcryptjs';
 import config from 'config';
 import jwt from "jsonwebtoken";
@@ -61,6 +63,23 @@ router.post('/login', async(req, res) => {
                 roles: user.roles,
             },
             message: 'login successful',
+        });
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+router.get('/auth', authMiddleWare, async(req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.user.id });
+        const token = generateAccessToken(user._id, user.roles);
+        return res.json({
+            token,
+            user: {
+                id: user.id,
+                username: user.username,
+                roles: user.roles,
+            },
         });
     } catch (error) {
         console.error(error);
