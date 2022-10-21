@@ -5,6 +5,7 @@ const Resource = new mongoose.Schema({
     link: { type: String, required: true, unique: true },
     description: { type: String },
     createDate: { type: Date, required: true, default: Date.now },
+    changedBy: {type: String},
     modifiedDates: { type: Array },
     categories: { type: Array },
 })
