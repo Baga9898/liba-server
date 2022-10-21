@@ -6,7 +6,7 @@ const Resource = new mongoose.Schema({
     description: { type: String },
     createDate: { type: Date, required: true, default: Date.now },
     changedBy: {type: String},
-    modifiedDates: { type: Array },
+    modifiedDate: { type: Date, default: Date.now },
     categories: { type: Array },
 })
 
