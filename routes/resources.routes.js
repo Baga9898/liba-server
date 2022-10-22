@@ -6,8 +6,8 @@ const basePath = '/resources';
 
 router.post(basePath, async(req, res) => {
     try {
-        const { name, link, description, createDate, modifiedDates, categories } = req.body;
-        const resource = new Resource({ name, link, description, createDate, modifiedDates, categories });
+        const { name, link, description, createDate, changedBy, modifiedDate, categories } = req.body;
+        const resource = new Resource({ name, link, description, createDate, changedBy, modifiedDate, categories });
         await resource.save();
         return res.json(resource);
     } catch (error) {
